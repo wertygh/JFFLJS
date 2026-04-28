@@ -58,11 +58,11 @@ JfflJs.clazz("handlers.MyHandler")
 
  - API概述
 
- **·** JfflJs.clazz(类名) – 构建一个新类。
- **·** JfflJs.patch(目标类) – 对一个现有类声明一组变换。
- **·** JfflJs.transform(目标类) – 底层访问：javassist、原始字节、操作钩子。
- **·** JfflJs.at(值) – 注入点（HEAD、RETURN、INVOKE、FIELD等）。
- **·** JfflJs.body() – 辅助构建Javassist源码片段。
+ - JFFLJS.clazz(类名) – 构建一个新类。
+ - JFFLJS.patch(目标类) – 对一个现有类声明一组变换。
+ - JFFLJS.transform(目标类) – 底层访问：javassist、原始字节、操作钩子。
+ - JFFLJS.at(值) – 注入点（HEAD、RETURN、INVOKE、FIELD等）。
+ - JFFLJS.body() – 辅助构建Javassist源码片段。
 
 详细方法签名请参阅源码及示例。
 
