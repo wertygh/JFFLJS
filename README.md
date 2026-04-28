@@ -20,7 +20,7 @@ JFFLJS是[JFFL](https://github.com/wertygh/JFFL-Javassist-Framework-for-Forge-Lo
 
 ## 功能快速概览
 
- - 动态生成类
+ - **动态生成类**
 
 ```js
 // 创建一个简单的工具类
@@ -34,7 +34,7 @@ JfflJs.clazz("utils.MathHelper")
     .define();
 ```
 
- - 对Minecraft类应用补丁
+ - **对Minecraft类应用补丁**
 
 ```js
 JFFLJS.patch('net.minecraft.client.main.Main')
@@ -43,7 +43,7 @@ JFFLJS.patch('net.minecraft.client.main.Main')
     );
 ```
 
- - 使用JavaScript函数作为方法体
+ - **使用JavaScript函数作为方法体**
 
 ```js
 JfflJs.clazz("handlers.MyHandler")
@@ -56,7 +56,7 @@ JfflJs.clazz("handlers.MyHandler")
     .define();
 ```
 
- - API概述
+ - **API概述**
 
  - JFFLJS.clazz(类名) – 构建一个新类。
  - JFFLJS.patch(目标类) – 对一个现有类声明一组变换。
@@ -66,7 +66,7 @@ JfflJs.clazz("handlers.MyHandler")
 
 详细方法签名请参阅源码及示例。
 
- - 条件与优先级
+ - **条件与优先级**
 
 补丁可以附带条件和优先级：
 
