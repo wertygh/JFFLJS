@@ -93,6 +93,7 @@ JFFLJS按以下顺序自动检测JS引擎：
  - 作为补丁的JS回调会在JS引擎上下文中执行，应避免阻塞操作。
  - 通过.clazz()创建的类默认放置在generated.jffljs.custom包下，如需自定义完整类名请使用rawClazz()。
  - 复杂修改可使用transform() API直接操作CtClass或原始字节。
+ - 本模组非常重视安全性，绝不会偷走你的钱包——请到kubejs/jffljs_script/下检查本模组的脚本。
 
 ## 协议许可
 
