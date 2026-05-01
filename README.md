@@ -2,6 +2,7 @@
 
 JFFLJS是[JFFL](https://github.com/wertygh/JFFL-Javassist-Framework-for-Forge-Loader-)字节码修改框架的JavaScript脚本扩展。
 允许开发者在运行时使用JavaScript动态生成Java类或对现有类进行字节码补丁。
+[English](https://github.com/wertygh/JFFLJS/blob/main/README_English.md)
 
 ## 功能特性
 
