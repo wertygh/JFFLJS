@@ -1,29 +1,30 @@
-## 简介
+# JFFLJS – JavaScript Bytecode Manipulation for JFFL
 
-JFFLJS是[JFFL](https://github.com/wertygh/JFFL-Javassist-Framework-for-Forge-Loader-)字节码修改框架的JavaScript脚本扩展。
-允许开发者在运行时使用JavaScript动态生成Java类或对现有类进行字节码补丁。
+## Introduction
 
-## 功能特性
+JFFLJS is a JavaScript scripting extension for the [JFFL](https://github.com/wertygh/JFFL-Javassist-Framework-for-Forge-Loader-) bytecode modification framework. It allows developers to dynamically generate Java classes at runtime or apply bytecode patches to existing classes using JavaScript.
 
- - 提供链式构建器API创建完整的Java类（字段、方法、构造函数、注解）。
- - 仿照@Patch注解的声明式补丁DSL – 注入、重定向、包装、替换方法。
- - 可在JS中直接操作CtClass和原始字节码。
- - 自动加载kubejs/jffljs_script/目录下的所有.js脚本。
- - 无缝集成JFFL变换管线。
- - 支持[GraalJS](https://github.com/oracle/graaljs)和[Rhino](https://github.com/KubeJS-Mods/Rhino)两种JS引擎。
+## Features
 
-## 安装
+- Provides a chaining builder API to create complete Java classes (fields, methods, constructors, annotations).
+- Declarative patching DSL inspired by `@Patch` – inject, redirect, wrap, replace methods.
+- Direct manipulation of `CtClass` and raw bytecode from JavaScript.
+- Automatically loads all `.js` scripts from the `/kubejs/jffljs_script/` directory.
+- Seamless integration with the JFFL transformation pipeline.
+- Supports both [GraalJS](https://github.com/oracle/graaljs) and [Rhino](https://github.com/KubeJS-Mods/Rhino) JS engines.
 
-1. 安装[JFFL](https://www.curseforge.com/minecraft/mc-mods/jffl)。
-2. 添加JavaScript引擎模组：推荐[Graal](https://www.curseforge.com/minecraft/mc-mods/graal/)，或者[Rhino](https://www.curseforge.com/minecraft/mc-mods/rhino)。
-3. 将你的.js脚本放入/kubejs/jffljs_script/目录，启动游戏时会自动加载。
+## Installation
 
-## 功能快速概览
+1. Install [JFFL](https://www.curseforge.com/minecraft/mc-mods/jffl).
+2. Add a JavaScript engine mod: recommended [Graal](https://www.curseforge.com/minecraft/mc-mods/graal/), or [Rhino](https://www.curseforge.com/minecraft/mc-mods/rhino).
+3. Place your `.js` scripts into `/kubejs/jffljs_script/`; they will be automatically loaded when the game starts.
 
- - **动态生成类**
+## Quick Feature Overview
+
+### Dynamically Generate a Class
 
 ```js
-// 创建一个简单的工具类
+// Create a simple utility class
 JfflJs.clazz("utils.MathHelper")
     .pub().final_()
     .method("square")
@@ -34,7 +35,7 @@ JfflJs.clazz("utils.MathHelper")
     .define();
 ```
 
- - **对Minecraft类应用补丁**
+### Apply a Patch to a Minecraft Class
 
 ```js
 JFFLJS.patch('net.minecraft.client.main.Main')
@@ -43,7 +44,7 @@ JFFLJS.patch('net.minecraft.client.main.Main')
     );
 ```
 
- - **使用JavaScript函数作为方法体**
+### Use a JavaScript Function as the Method Body
 
 ```js
 JfflJs.clazz("handlers.MyHandler")
@@ -51,51 +52,51 @@ JfflJs.clazz("handlers.MyHandler")
         .pub()
         .returns("void")
         .js(function(self, args) {
-            console.log("事件处理，参数：" + args);
+            console.log("Event handled, args: " + args);
         })
     .define();
 ```
 
- - **API概述**
+### API Overview
 
- - JFFLJS.clazz(类名) – 构建一个新类。
- - JFFLJS.patch(目标类) – 对一个现有类声明一组变换。
- - JFFLJS.transform(目标类) – 底层访问：javassist、原始字节、操作钩子。
- - JFFLJS.at(值) – 注入点（HEAD、RETURN、INVOKE、FIELD等）。
- - JFFLJS.body() – 辅助构建Javassist源码片段。
+- `JFFLJS.clazz(className)` – Build a new class.
+- `JFFLJS.patch(targetClass)` – Declare a set of transformations on an existing class.
+- `JFFLJS.transform(targetClass)` – Low‑level access: javassist, raw bytes, operation hooks.
+- `JFFLJS.at(value)` – Injection point (HEAD, RETURN, INVOKE, FIELD, etc.).
+- `JFFLJS.body()` – Helper to build Javassist source snippets.
 
-详细方法签名请参阅源码及示例。
+For detailed method signatures, please refer to the source code and examples.
 
- - **条件与优先级**
+### Conditions and Priority
 
-补丁可以附带条件和优先级：
+Patches can include conditions and a priority value:
 
 ```js
 JfflJs.patch("com.example.MyClass")
     .priority(500)
     .classExists("com.some.RequiredModClass")
     .systemProperty("some.config.enabled")
-    .inject("myMethod", JfflJs.head(), '{ /* 注入代码 */ }');
+    .inject("myMethod", JfflJs.head(), '{ /* injected code */ }');
 ```
 
-## 引擎选择
+## Engine Selection
 
-JFFLJS按以下顺序自动检测JS引擎：
+JFFLJS automatically detects the JS engine in the following order:
 
-1. GraalJS（两者存在时优先）
-2. Rhino（GraalJS不存在时选择）
+1. GraalJS (preferred if present)
+2. Rhino (chosen when GraalJS is not available)
 
-也可以手动通过JfflJsEngineHolder.getEngine()获取引擎实例。
+You can also manually obtain the engine instance via `JfflJsEngineHolder.getEngine()`.
 
-## 注意事项
+## Important Notes
 
- - 所有补丁动作在对应类首次加载时执行一次，按优先级排序。
- - 作为补丁的JS回调会在JS引擎上下文中执行，应避免阻塞操作。
- - 通过.clazz()创建的类默认放置在generated.jffljs.custom包下，如需自定义完整类名请使用rawClazz()。
- - 复杂修改可使用transform() API直接操作CtClass或原始字节。
- - 本模组非常重视安全性，绝不会偷走你的钱包——请到kubejs/jffljs_script/下检查本模组的脚本。
+- All patch actions are executed once, when the target class is first loaded, and are sorted by priority.
+- JS callbacks used as patch code run in the JS engine context; avoid blocking operations.
+- Classes created via `.clazz()` are placed in the `generated.jffljs.custom` package by default. Use `rawClazz()` for a custom fully‑qualified name.
+- For complex modifications, use the `transform()` API to directly manipulate `CtClass` or raw bytes.
+- This mod takes security seriously – it will never steal your wallet. Check the scripts located in `/kubejs/jffljs_script/` yourself.
 
-## 协议许可
+## License
 
-JFFLJS与JFFL采用相同的开源协议。
-详情请查看父项目。
+JFFLJS uses the same open‑source license as JFFL.  
+See the parent project for details.
