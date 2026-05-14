@@ -1,0 +1,4 @@
+This software depends on JFFL (https://github.com/yourname/JFFL), 
+which includes Javassist (https://www.javassist.org/). 
+Javassist is licensed under the Mozilla Public License Version 1.1, 
+the GNU Lesser General Public License Version 2.1, or the Apache License Version 2.0.
